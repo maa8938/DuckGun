@@ -85,8 +85,6 @@ func _process(delta: float) -> void:
 
 		pellet_param = [current_theta, delta_x, delta_y]
 
-		position.x += delta_x
-		position.y += delta_y
 
 func blast():
 	var pellet = PELLET.instantiate()
@@ -99,7 +97,6 @@ func _on_body_entered(body: Node2D) -> void:
 		bounce = true
 
 func _on_body_exited(body: Node2D) -> void:
-	print(body.name)
 	if body.is_in_group("Walls"):
 		bounce = false
 

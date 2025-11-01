@@ -1,10 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://c1i8of7gfiqd7"]
+[gd_scene load_steps=4 format=3 uid="uid://c1i8of7gfiqd7"]
 
 [ext_resource type="Script" path="res://goose.gd" id="1_iipqp"]
 [ext_resource type="Texture2D" uid="uid://dtgdfhpmnrjem" path="res://icon.svg" id="2_gp663"]
 
-[node name="Goose" type="Node2D"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dkcd8"]
+size = Vector2(126, 128)
+
+[node name="Goose" type="CharacterBody2D"]
 script = ExtResource("1_iipqp")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_gp663")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_dkcd8")

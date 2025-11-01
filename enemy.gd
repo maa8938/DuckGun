@@ -1,4 +1,4 @@
-extends Node2D
+extends CharacterBody2D
 
 var target_pos # where the enemy is attempting to go
 var change_target_time # the time between changing target pos
@@ -38,11 +38,6 @@ func movement(delta):
 	
 	var delta_x = cos(current_theta) * SPEED * delta
 	var delta_y = sin(current_theta) * SPEED * delta
-	
-	if not above:
-		delta_y *= -1
-	if not left:
-		delta_x *= -1
 	
 	return [delta_x, delta_y]
 

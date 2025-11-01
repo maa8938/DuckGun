@@ -23,3 +23,7 @@ func _process(delta: float) -> void:
 		dt -= 1/60
 		position.x += delta_x * delta * SPEED
 		position.y += delta_y * delta * SPEED
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	pass
