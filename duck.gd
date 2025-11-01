@@ -13,21 +13,41 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var mouse_pos = get_viewport().get_mouse_position()
-	look_at(mouse_pos) # look at changes angle to look at, mouse position is gotten through methods
+	#look_at(mouse_pos) # look at changes angle to look at, mouse position is gotten through methods
 
 	var left = position.x < mouse_pos.x
 	var above = position.y < mouse_pos.y
 	
-	var x = abs(position.x - mouse_pos.x)
-	var y = abs(position.y - mouse_pos.y)
+	var true_x = position.x - mouse_pos.x
+	var true_y = position.y - mouse_pos.y
+
+	var x = abs(true_x)
+	var y = abs(true_y)
 	
 	var current_theta = atan(y/x)
 	
 	var delta_x = cos(current_theta) * SPEED * delta
 	var delta_y = sin(current_theta) * SPEED * delta
-	
+
 	if not left:
 		delta_x *= -1
+		$Area2D/AnimatedSprite2D.animation = "side"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = true
+	else:
+		$Area2D/AnimatedSprite2D.animation = "side"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
+	
+	print(delta_y)
+	if (true_y / x) > 3.5:
+		$Area2D/AnimatedSprite2D.animation = "back"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
+	if (true_y / x) < -3.5:
+		$Area2D/AnimatedSprite2D.animation = "front"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
 	
 	if not above:
 		delta_y *= -1
