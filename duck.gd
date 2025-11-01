@@ -11,7 +11,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	var mouse_pos = get_viewport().get_mouse_position()
-	#look_at(mouse_pos) # look at changes angle to look at, mouse position is gotten through methods
+	# look_at(mouse_pos) # look at changes angle to look at, mouse position is gotten through methods
 
 	var left = position.x < mouse_pos.x
 	var above = position.y < mouse_pos.y
@@ -23,15 +23,18 @@ func _process(delta: float) -> void:
 	
 	var delta_x = cos(theta) * SPEED * delta
 	var delta_y = sin(theta) * SPEED * delta
+	var deadzone = 10
 	
 	if not left:
 		delta_x *= -1
 	
 	if not above:
 		delta_y *= -1
-	
-	position.x += delta_x
-	position.y += delta_y
+		
+	# deadzone implementation
+	if !(((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
+		position.x += delta_x
+		position.y += delta_y
 	
 	
 	
