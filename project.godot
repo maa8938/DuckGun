@@ -12,8 +12,16 @@ config_version=5
 
 config/name="DuckGun"
 run/main_scene="res://main.tscn"
+<<<<<<< HEAD
 config/features=PackedStringArray("4.5", "Mobile")
+=======
+config/features=PackedStringArray("4.4", "Mobile")
+>>>>>>> 8a9b4847e0537863279b54438d058f013f763116
 config/icon="res://icon.svg"
+
+[dotnet]
+
+project/assembly_name="DuckGun"
 
 [rendering]
 
