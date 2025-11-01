@@ -2,12 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://cchdgno8ahqom" path="res://Duck.tscn" id="1_66mkc"]
 [ext_resource type="PackedScene" uid="uid://c1i8of7gfiqd7" path="res://goose.tscn" id="2_c58p4"]
-[ext_resource type="PackedScene" uid="uid://caiv1nip16x3h" path="res://wall.tscn" id="2_0xm2m"]
 
 [node name="Main" type="Node2D"]
-
-[node name="Wall" parent="." groups=["Walls"] instance=ExtResource("2_0xm2m")]
-position = Vector2(166, 230)
 
 [node name="Duck" parent="." instance=ExtResource("1_66mkc")]
 position = Vector2(461, 449)

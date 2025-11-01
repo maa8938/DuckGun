@@ -69,19 +69,19 @@ func _process(delta: float) -> void:
 		if delta_x != 0 and delta_y != 0:
 			attention.emit()
 
-        var area = $Area2D
-        var wall = "res://wall.tscn"
+		var area = $Area2D
+		var wall = "res://wall.tscn"
 
-        # deadzone implementation
-        if not (((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
-            if not bounce:
-                og_d_x = delta_x
-                og_d_y = delta_y
-                position.x += delta_x
-                position.y += delta_y
-            else:
-                position.x -= og_d_x
-                position.y -= og_d_y
+		# deadzone implementation
+		if not (((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
+			if not bounce:
+				og_d_x = delta_x
+				og_d_y = delta_y
+				position.x += delta_x
+				position.y += delta_y
+			else:
+				position.x -= og_d_x
+				position.y -= og_d_y
 
 		pellet_param = [current_theta, delta_x, delta_y]
 
