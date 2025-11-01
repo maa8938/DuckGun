@@ -49,6 +49,13 @@ func _process(delta: float) -> void:
 		$Area2D/AnimatedSprite2D.play()
 		$Area2D/AnimatedSprite2D.flip_h = false
 	
+	if (x**2 + y**2)**0.5 < 10:
+		delta_x = 0
+		delta_y = 0
+		$Area2D/AnimatedSprite2D.animation = "idle"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
+	
 	if not above:
 		delta_y *= -1
 	
