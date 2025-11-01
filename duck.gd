@@ -62,7 +62,7 @@ func _process(delta: float) -> void:
 		if not above:
 			delta_y *= -1
 		if delta_x != 0 and delta_y != 0:
-			attention.emit(position)
+			attention.emit()
 			
 		pellet_param = [current_theta, delta_x, delta_y]
 		
@@ -75,7 +75,7 @@ func blast():
 	var pellet = PELLET.instantiate()
 	pellet.Pellet(position, pellet_param)
 	get_tree().current_scene.add_child(pellet)
-	print(get_parent().get_tree_string_pretty())
+	attention.emit()
 
 	
 func _input(event: InputEvent) -> void:
