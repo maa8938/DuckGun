@@ -2,6 +2,7 @@ extends Node2D
 
 
 const SPEED = 1000
+# var WALL = "res://wall.tscn"
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,9 +33,13 @@ func _process(delta: float) -> void:
 		delta_y *= -1
 		
 	# deadzone implementation
-	if !(((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
+	var distance = ((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5
+	if !(distance < deadzone):
 		position.x += delta_x
 		position.y += delta_y
+	
+	
+		
 	
 	
 	
