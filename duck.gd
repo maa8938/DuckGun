@@ -39,7 +39,7 @@ func _process(delta: float) -> void:
 		$Area2D/AnimatedSprite2D.play()
 		$Area2D/AnimatedSprite2D.flip_h = false
 	
-	print(delta_y)
+	#print(delta_y)
 	if (true_y / x) > 3.5:
 		$Area2D/AnimatedSprite2D.animation = "back"
 		$Area2D/AnimatedSprite2D.play()
