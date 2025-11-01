@@ -1,14 +1,13 @@
-extends Node2D
+extends CharacterBody2D
 
-var dt = 0
 var health = 3
-var bounce = false
-var og_d_x = 0
-var og_d_y = 0
 
-const SPEED = 250
+const SPEED = 35000
+
 var pellet_param = []
 signal attention(pos)
+
+@onready var 	sprite = $AnimatedSprite2D
 @onready var PELLET = preload("res://pellet.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -17,92 +16,67 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	dt += delta
-	if dt > 1 / 60:
-		dt -= 1/60
-		var mouse_pos = get_viewport().get_mouse_position()
-		#look_at(mouse_pos) # look at changes angle to look at, mouse position is gotten through methods
+	var mouse_pos = get_viewport().get_mouse_position()
 
-		var left = position.x < mouse_pos.x
-		var above = position.y < mouse_pos.y
-		
-		var true_x = position.x - mouse_pos.x
-		var true_y = position.y - mouse_pos.y
+	var left = position.x < mouse_pos.x
+	var above = position.y < mouse_pos.y
+	
+	var true_x = position.x - mouse_pos.x
+	var true_y = position.y - mouse_pos.y
+	var x = abs(true_x)
+	var y = abs(true_y)
+	
+	var current_theta = atan(y/x)
+	var deadzone = 10
 
-		var x = abs(true_x)
-		var y = abs(true_y)
-		
-		var current_theta = atan(y/x)
-		var deadzone = 10
+	velocity.x = cos(current_theta) * SPEED * delta * -true_x / x
+	velocity.y = sin(current_theta) * SPEED * delta * -true_y / y
+	
 
-		var delta_x = cos(current_theta) * SPEED * delta
-		var delta_y = sin(current_theta) * SPEED * delta
+	# animation if statements
+	if not left:
+		sprite.animation = "side"
+		sprite.play()
+		sprite.flip_h = true
+	else:
+		sprite.animation = "side"
+		sprite.play()
+		sprite.flip_h = false
 
-		if not left:
-			delta_x *= -1
-			$Area2D/AnimatedSprite2D.animation = "side"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = true
-		else:
-			$Area2D/AnimatedSprite2D.animation = "side"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = false
+	if (true_y / x) > 3.5:
+		sprite.animation = "back"
+		sprite.play()
+		sprite.flip_h = false
+	if (true_y / x) < -3.5:
+		sprite.animation = "front"
+		sprite.play()
+		sprite.flip_h = false
 
-		if (true_y / x) > 3.5:
-			$Area2D/AnimatedSprite2D.animation = "back"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = false
-		if (true_y / x) < -3.5:
-			$Area2D/AnimatedSprite2D.animation = "front"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = false
+	# deadzone implementation
+	if (x**2 + y**2)**0.5 < 10:
+		sprite.animation = "idle"
+		sprite.play()
+		velocity.x = 0
+		velocity.y = 0
+		sprite.flip_h = false
 
-		if (x**2 + y**2)**0.5 < 10:
-			delta_x = 0
-			delta_y = 0
-			$Area2D/AnimatedSprite2D.animation = "idle"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = false
+	pellet_param = [current_theta, velocity.x / 100, velocity.y / 100]
+	if velocity.x != 0 or velocity.y != 0:
+		attention.emit()
 
-		if not above:
-			delta_y *= -1
-		if delta_x != 0 and delta_y != 0:
-			attention.emit()
-
-		var area = $Area2D
-		var wall = "res://wall.tscn"
-
-		# deadzone implementation
-		if not (((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
-			if not bounce:
-				og_d_x = delta_x
-				og_d_y = delta_y
-				position.x += delta_x
-				position.y += delta_y
-			else:
-				position.x -= og_d_x
-				position.y -= og_d_y
-
-		pellet_param = [current_theta, delta_x, delta_y]
-
-
+func _physics_process(delta: float) -> void:
+	move_and_slide()
 func blast():
 	var pellet = PELLET.instantiate()
 	pellet.Pellet(position, pellet_param)
 	get_tree().current_scene.add_child(pellet)
 	attention.emit()
 
-func _on_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Walls"):
-		bounce = true
-
-func _on_body_exited(body: Node2D) -> void:
-	if body.is_in_group("Walls"):
-		bounce = false
-
 func _input(event: InputEvent) -> void:
-	if event.is_action_released("left_click") and $Area2D/AnimatedSprite2D.animation != "idle":
+	if (event.is_action_released("left_click") or event.is_action_pressed("space")) and sprite.animation != "idle":
+		print("Press")
 		blast()
 
 func hurt():
-	health -= 1
+	if health > 0:
+		health -= 1

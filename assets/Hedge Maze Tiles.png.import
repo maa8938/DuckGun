@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvs4d7c10pe4k"
-path="res://.godot/imported/duck-Sheet.png-42bbf3d5f7b7a5752b1047c7da08aed0.ctex"
+uid="uid://dtv51wyegruna"
+path="res://.godot/imported/Hedge Maze Tiles.png-b32742d5deae9d3581254442c5561773.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/duck/duck-Sheet.png"
-dest_files=["res://.godot/imported/duck-Sheet.png-42bbf3d5f7b7a5752b1047c7da08aed0.ctex"]
+source_file="res://assets/Hedge Maze Tiles.png"
+dest_files=["res://.godot/imported/Hedge Maze Tiles.png-b32742d5deae9d3581254442c5561773.ctex"]
 
 [params]
 

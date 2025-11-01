@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvs4d7c10pe4k"
-path="res://.godot/imported/duck-Sheet.png-42bbf3d5f7b7a5752b1047c7da08aed0.ctex"
+uid="uid://b6e1b3eeillpg"
+path="res://.godot/imported/rat.png-f2aaa2762927848cb0de488ebf987a84.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/duck/duck-Sheet.png"
-dest_files=["res://.godot/imported/duck-Sheet.png-42bbf3d5f7b7a5752b1047c7da08aed0.ctex"]
+source_file="res://assets/Rodents Rat Rework 1.0/PNG/32x32/rat.png"
+dest_files=["res://.godot/imported/rat.png-f2aaa2762927848cb0de488ebf987a84.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cvs4d7c10pe4k"
-path="res://.godot/imported/duck-Sheet.png-42bbf3d5f7b7a5752b1047c7da08aed0.ctex"
+uid="uid://cs3gt5nbugd04"
+path="res://.godot/imported/Animated Slime Spritesheet.png-8b15359a8caf3a85a84903afd8fd558a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/duck/duck-Sheet.png"
-dest_files=["res://.godot/imported/duck-Sheet.png-42bbf3d5f7b7a5752b1047c7da08aed0.ctex"]
+source_file="res://assets/Animated Slime Spritesheet.png"
+dest_files=["res://.godot/imported/Animated Slime Spritesheet.png-8b15359a8caf3a85a84903afd8fd558a.ctex"]
 
 [params]
 

@@ -18,7 +18,8 @@ func _physics_process(delta: float) -> void:
 	
 func on_attention():
 	var curr_time = Time.get_unix_time_from_system()
-	if curr_time - last_time > 0.5:
+	if curr_time - last_time > 1:
+		#print(target_pos)
 		last_time = curr_time
 		target_pos = get_tree().current_scene.find_child("Duck").position
 		print(target_pos)
