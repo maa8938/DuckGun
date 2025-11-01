@@ -1,114 +1,106 @@
-# 1. Change this to CharacterBody2D
-extends CharacterBody2D
+extends Node2D
 
-# --- No longer needed ---
-# var bounce = false
-# var og_d_x = 0
-# var og_d_y = 0
-# -----------------------
+var bounce = false
+var og_d_x = 0
+var og_d_y = 0
 
-const SPEED = 350
+const SPEED = 250
 var pellet_param = []
 @onready var PELLET = preload("res://pellet.tscn")
-
-# You can cache this for convenience
-@onready var animated_sprite = $AnimatedSprite2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
 
-# 2. Use _physics_process for all movement and physics
-func _physics_process(delta: float) -> void:
-	# Use global_mouse_position for coordinates in the game world
-	var mouse_pos = get_global_mouse_position()
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	var mouse_pos = get_viewport().get_mouse_position()
+	#look_at(mouse_pos) # look at changes angle to look at, mouse position is gotten through methods
 
-	# 3. Calculate direction and distance
-	var direction = (mouse_pos - global_position).normalized()
-	var distance = global_position.distance_to(mouse_pos)
+	var left = position.x < mouse_pos.x
+	var above = position.y < mouse_pos.y
 	
+	var true_x = position.x - mouse_pos.x
+	var true_y = position.y - mouse_pos.y
+
+	var x = abs(true_x)
+	var y = abs(true_y)
+	
+	var current_theta = atan(y/x)
 	var deadzone = 10
 	
-	# 4. Set velocity based on direction and deadzone
-	if distance > deadzone:
-		velocity = direction * SPEED
+	#print(current_theta)
+
+	var delta_x = cos(current_theta) * SPEED * delta
+	var delta_y = sin(current_theta) * SPEED * delta
+
+	if not left:
+		delta_x *= -1
+
+		$Area2D/AnimatedSprite2D.animation = "side"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = true
 	else:
-		velocity = Vector2.ZERO
-
-	# 5. Let Godot handle collisions!
-	# This single line moves the player, collides with physics bodies
-	# (like StaticBody2D walls), and slides along them smoothly.
-	move_and_slide()
-
-	# 6. Update animations based on the final velocity
-	update_animations()
+		$Area2D/AnimatedSprite2D.animation = "side"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
 	
-	# 7. Store parameters for the pellet
-	# We store the angle (in radians) and the velocity vector
-	pellet_param = [direction.angle(), velocity.x, velocity.y]
-
-
-func update_animations():
-	if velocity.length_squared() < 0.1:
-		# Not moving
-		animated_sprite.animation = "idle"
-		animated_sprite.play()
-		animated_sprite.flip_h = false
-		return # Exit the function early
-
-	# If we're here, we are moving.
-	animated_sprite.play()
+	if (true_y / x) > 3.5:
+		$Area2D/AnimatedSprite2D.animation = "back"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
+	if (true_y / x) < -3.5:
+		$Area2D/AnimatedSprite2D.animation = "front"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
 	
-	# Check for division by zero (moving purely vertically)
-	if velocity.x == 0:
-		if velocity.y < 0:
-			animated_sprite.animation = "back"
-			animated_sprite.flip_h = false
-		else:
-			animated_sprite.animation = "front"
-			animated_sprite.flip_h = false
-	else:
-		# Moving with some horizontal component, so division is safe
-		var ratio = abs(velocity.y / velocity.x)
+	if (x**2 + y**2)**0.5 < 10:
+		delta_x = 0
+		delta_y = 0
+		$Area2D/AnimatedSprite2D.animation = "idle"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
 		
-		if ratio > 3.5:
-			# Prioritize vertical animation
-			if velocity.y < 0:
-				animated_sprite.animation = "back"
-				animated_sprite.flip_h = false
-			else:
-				animated_sprite.animation = "front"
-				animated_sprite.flip_h = false
+	if not above:
+		delta_y *= -1
+
+	var area = $Area2D
+	var wall = "res://wall.tscn"
+
+	# deadzone implementation
+	if not (((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
+		if not bounce:
+			og_d_x = delta_x	
+			og_d_y = delta_y
+			position.x += delta_x
+			position.y += delta_y
 		else:
-			# Prioritize horizontal animation
-			animated_sprite.animation = "side"
-			if velocity.x < 0:
-				animated_sprite.flip_h = true # Moving left
-			else:
-				animated_sprite.flip_h = false # Moving right
+			position.x -= og_d_x
+			position.y -= og_d_y
+	
+	pellet_param = [current_theta, delta_x, delta_y]
+	
+	position.x += delta_x
+	position.y += delta_y
 
 
 func blast():
 	var pellet = PELLET.instantiate()
-	# Pass global_position so it spawns in the right world-space location
-	pellet.Pellet(global_position, pellet_param)
+	pellet.Pellet(position, pellet_param)
 	get_tree().current_scene.add_child(pellet)
-	# print(get_parent().get_tree_string_pretty())
+	print(get_parent().get_tree_string_pretty())
 
 
-# 8. --- REMOVE THESE FUNCTIONS ---
-# They are no longer needed, as move_and_slide() handles wall collisions.
-#
-# func _on_body_entered(body: Node2D) -> void:
-# 	if body.is_in_group("Walls"):
-# 		bounce = true
-#
-# func _on_body_exited(body: Node2D) -> void:
-# 	if body.is_in_group("Walls"):
-# 		bounce = false
-# ---------------------------------
+func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("Walls"):
+		bounce = true
+
+func _on_body_exited(body: Node2D) -> void:
+	print(body.name)
+	if body.is_in_group("Walls"):
+		bounce = false
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("shoot") and animated_sprite.animation != "idle":
+	if event.is_action_released("left_click") and $Area2D/AnimatedSprite2D.animation != "idle":
 		blast()

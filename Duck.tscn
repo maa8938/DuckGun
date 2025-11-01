@@ -489,10 +489,12 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_48mle"]
 size = Vector2(126, 128)
 
-[node name="Duck" type="CharacterBody2D"]
+[node name="Duck" type="Node2D"]
 script = ExtResource("1_wat76")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Area2D"]
 texture_filter = 1
 position = Vector2(0, -1)
 scale = Vector2(6.7, 6.7)
@@ -501,5 +503,8 @@ animation = &"back"
 autoplay = "idle"
 frame_progress = 0.297054
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_48mle")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="area_exited" from="Area2D" to="." method="_on_body_exited"]
