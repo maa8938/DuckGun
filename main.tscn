@@ -10,7 +10,7 @@
 position = Vector2(461, 449)
 
 [node name="Wall" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(78.55011, 140.62488)
+position = Vector2(78.5501, 140.625)
 
 [node name="Goose" parent="." instance=ExtResource("2_c58p4")]
 visible = false
