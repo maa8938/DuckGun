@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1i8of7gfiqd7"]
+
+[ext_resource type="Script" path="res://goose.gd" id="1_iipqp"]
+[ext_resource type="Texture2D" uid="uid://dtgdfhpmnrjem" path="res://icon.svg" id="2_gp663"]
+
+[node name="Goose" type="Node2D"]
+script = ExtResource("1_iipqp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_gp663")

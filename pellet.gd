@@ -1,6 +1,7 @@
 extends Node2D
 
 var theta
+var dt = 0
 var delta_x = 0
 var delta_y = 0
 const SPEED = 350
@@ -17,5 +18,8 @@ func Pellet(pos: Vector2, pp):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:	
-	position.x += delta_x * delta * SPEED
-	position.y += delta_y * delta * SPEED
+	dt += delta
+	if dt > 1 / 60:
+		dt -= 1/60
+		position.x += delta_x * delta * SPEED
+		position.y += delta_y * delta * SPEED
