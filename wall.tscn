@@ -12,7 +12,7 @@ metadata/name = "wall"
 position = Vector2(110, -12)
 texture = ExtResource("1_xxgf6")
 
-[node name="Area2D" type="Area2D" parent="." groups=["Walls"]]
+[node name="Area2D" type="StaticBody2D" parent="." groups=["Walls"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 position = Vector2(110, -12)

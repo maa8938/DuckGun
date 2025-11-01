@@ -6,7 +6,7 @@ var bounce = false
 var og_d_x = 0
 var og_d_y = 0
 
-const SPEED = 250
+const SPEED = 350
 var pellet_param = []
 signal attention(pos)
 @onready var PELLET = preload("res://pellet.tscn")
@@ -17,76 +17,70 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	dt += delta
-	if dt > 1 / 60:
-		dt -= 1/60
-		var mouse_pos = get_viewport().get_mouse_position()
-		#look_at(mouse_pos) # look at changes angle to look at, mouse position is gotten through methods
+	var mouse_pos = get_viewport().get_mouse_position()
+	#look_at(mouse_pos) # look at changes angle to look at, mouse position is gotten through methods
 
-		var left = position.x < mouse_pos.x
-		var above = position.y < mouse_pos.y
-		
-		var true_x = position.x - mouse_pos.x
-		var true_y = position.y - mouse_pos.y
+	var left = position.x < mouse_pos.x
+	var above = position.y < mouse_pos.y
+	
+	var true_x = position.x - mouse_pos.x
+	var true_y = position.y - mouse_pos.y
 
-		var x = abs(true_x)
-		var y = abs(true_y)
-		
-		var current_theta = atan(y/x)
-		var deadzone = 10
+	var x = abs(true_x)
+	var y = abs(true_y)
+	
+	var current_theta = atan(y/x)
+	var deadzone = 10
 
-		var delta_x = cos(current_theta) * SPEED * delta
-		var delta_y = sin(current_theta) * SPEED * delta
+	var delta_x = cos(current_theta) * SPEED * delta
+	var delta_y = sin(current_theta) * SPEED * delta
 
-		if not left:
-			delta_x *= -1
-			$Area2D/AnimatedSprite2D.animation = "side"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = true
+	if not left:
+		delta_x *= -1
+		$Area2D/AnimatedSprite2D.animation = "side"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = true
+	else:
+		$Area2D/AnimatedSprite2D.animation = "side"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
+
+	if (true_y / x) > 3.5:
+		$Area2D/AnimatedSprite2D.animation = "back"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
+	if (true_y / x) < -3.5:
+		$Area2D/AnimatedSprite2D.animation = "front"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
+
+	if (x**2 + y**2)**0.5 < 10:
+		delta_x = 0
+		delta_y = 0
+		$Area2D/AnimatedSprite2D.animation = "idle"
+		$Area2D/AnimatedSprite2D.play()
+		$Area2D/AnimatedSprite2D.flip_h = false
+
+	if not above:
+		delta_y *= -1
+	if delta_x != 0 and delta_y != 0:
+		attention.emit()
+
+	var area = $Area2D
+	var wall = "res://wall.tscn"
+
+	# deadzone implementation
+	if not (((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
+		if not bounce:
+			og_d_x = delta_x
+			og_d_y = delta_y
+			position.x += delta_x
+			position.y += delta_y
 		else:
-			$Area2D/AnimatedSprite2D.animation = "side"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = false
+			position.x -= og_d_x
+			position.y -= og_d_y
 
-		if (true_y / x) > 3.5:
-			$Area2D/AnimatedSprite2D.animation = "back"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = false
-		if (true_y / x) < -3.5:
-			$Area2D/AnimatedSprite2D.animation = "front"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = false
-
-		if (x**2 + y**2)**0.5 < 10:
-			delta_x = 0
-			delta_y = 0
-			$Area2D/AnimatedSprite2D.animation = "idle"
-			$Area2D/AnimatedSprite2D.play()
-			$Area2D/AnimatedSprite2D.flip_h = false
-
-		if not above:
-			delta_y *= -1
-		if delta_x != 0 and delta_y != 0:
-			attention.emit()
-
-		var area = $Area2D
-		var wall = "res://wall.tscn"
-
-		# deadzone implementation
-		if not (((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
-			if not bounce:
-				og_d_x = delta_x
-				og_d_y = delta_y
-				position.x += delta_x
-				position.y += delta_y
-			else:
-				position.x -= og_d_x
-				position.y -= og_d_y
-
-		pellet_param = [current_theta, delta_x, delta_y]
-
-		position.x += delta_x
-		position.y += delta_y
+	pellet_param = [current_theta, delta_x, delta_y]
 
 func blast():
 	var pellet = PELLET.instantiate()
