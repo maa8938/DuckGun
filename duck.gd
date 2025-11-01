@@ -92,10 +92,13 @@ func blast():
 
 
 func _on_body_entered(body: Node2D) -> void:
-	bounce = true
+	if body.is_in_group("Walls"):
+		bounce = true
 
 func _on_body_exited(body: Node2D) -> void:
-	bounce = false
+	print(body.name)
+	if body.is_in_group("Walls"):
+		bounce = false
 
 
 func _input(event: InputEvent) -> void:
