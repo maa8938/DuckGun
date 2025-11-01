@@ -1,6 +1,9 @@
 extends Node2D
 
-var moving = true
+var bounce = false
+var og_d_x = 0
+var og_d_y = 0
+
 const SPEED = 250
 var pellet_param = []
 @onready var PELLET = preload("res://pellet.tscn")
@@ -26,7 +29,7 @@ func _process(delta: float) -> void:
 	var current_theta = atan(y/x)
 	var deadzone = 10
 	
-	print(current_theta)
+	#print(current_theta)
 
 	var delta_x = cos(current_theta) * SPEED * delta
 	var delta_y = sin(current_theta) * SPEED * delta
@@ -66,20 +69,20 @@ func _process(delta: float) -> void:
 
 	# deadzone implementation
 	if not (((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
-		if moving:
+		if not bounce:
+			og_d_x = delta_x	
+			og_d_y = delta_y
 			position.x += delta_x
-			position.y += delta_y	
+			position.y += delta_y
 		else:
-			position.x -= delta_x
-			position.y -= delta_y
-			moving = true
+			position.x -= og_d_x
+			position.y -= og_d_y
 	
 	pellet_param = [current_theta, delta_x, delta_y]
 	
 	position.x += delta_x
 	position.y += delta_y
-	
-	
+
 
 func blast():
 	var pellet = PELLET.instantiate()
@@ -87,11 +90,14 @@ func blast():
 	get_tree().current_scene.add_child(pellet)
 	print(get_parent().get_tree_string_pretty())
 
+
 func _on_body_entered(body: Node2D) -> void:
-	print("not moving")
-	moving = false
-	
+	bounce = true
+
+func _on_body_exited(body: Node2D) -> void:
+	bounce = false
+
+
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("left_click") and $Area2D/AnimatedSprite2D.animation != "idle":
 		blast()
-	
