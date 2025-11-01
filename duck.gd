@@ -1,6 +1,5 @@
 extends Node2D
 
-enum{Q1, Q2, Q3, Q4}
 
 const SPEED = 250
 var current_theta = -1
@@ -27,10 +26,21 @@ func _process(delta: float) -> void:
 	var delta_x = cos(current_theta) * SPEED * delta
 	var delta_y = sin(current_theta) * SPEED * delta
 	
-	if left and above:
+	if not left:
+		delta_x *= -1
 	
+	if not above:
+		delta_y *= -1
 	
-	
+	if not left and above:
+		quadrant = Globals.Q1
+	elif left and above:
+		quadrant = Globals.Q2
+	elif left and not above:
+		quadrant = Globals.Q3
+	elif not left and not above:
+		quadrant = Globals.Q4
+		
 	position.x += delta_x
 	position.y += delta_y
 	
@@ -38,14 +48,15 @@ func _process(delta: float) -> void:
 
 func blast():
 	var pellet = PELLET.instantiate()
-	pellet.Pellet(position, current_theta)
+	pellet.Pellet(position, current_theta, quadrant)
 	get_tree().current_scene.add_child(pellet)
 	print(get_parent().get_tree_string_pretty())
 
 	
 func _input(event: InputEvent) -> void:
 	if event.is_action_released("left_click"):
-		blast()
+		#blast()
+		print("blast")
 	
 	
 	
