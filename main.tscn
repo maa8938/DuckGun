@@ -5,7 +5,7 @@
 
 [node name="Main" type="Node2D"]
 
-[node name="Wall" parent="." instance=ExtResource("2_0xm2m")]
+[node name="Wall" parent="." groups=["Walls"] instance=ExtResource("2_0xm2m")]
 position = Vector2(166, 230)
 
 [node name="Duck" parent="." instance=ExtResource("1_66mkc")]
