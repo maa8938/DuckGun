@@ -2,11 +2,11 @@ extends Node2D
 
 
 const SPEED = 1000
+var moving = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass # Replace with function body.
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -24,20 +24,26 @@ func _process(delta: float) -> void:
 	var delta_x = cos(theta) * SPEED * delta
 	var delta_y = sin(theta) * SPEED * delta
 	var deadzone = 10
-	
+
 	if not left:
 		delta_x *= -1
-	
+
 	if not above:
 		delta_y *= -1
-		
+
+	var area = $Area2D
+	var wall = "res://wall.tscn"
+
 	# deadzone implementation
-	if !(((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
-		position.x += delta_x
-		position.y += delta_y
-	
-	
-	
-	
-	
-	
+	if not (((position.x - mouse_pos.x) ** 2 + (position.y - mouse_pos.y) ** 2)**0.5 < deadzone):
+		if moving:
+			position.x += delta_x
+			position.y += delta_y	
+		else:
+			position.x -= delta_x
+			position.y -= delta_y
+			moving = true
+
+func _on_body_entered(body: Node2D) -> void:
+	print("not moving")
+	moving = false
