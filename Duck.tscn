@@ -1,6 +1,6 @@
 [gd_scene load_steps=72 format=3 uid="uid://cchdgno8ahqom"]
 
-[ext_resource type="Script" path="res://duck.gd" id="1_wat76"]
+[ext_resource type="Script" uid="uid://cklunfjrbp2y6" path="res://duck.gd" id="1_wat76"]
 [ext_resource type="Texture2D" uid="uid://cvs4d7c10pe4k" path="res://assets/duck/duck-Sheet.png" id="3_5q5bb"]
 [ext_resource type="Texture2D" uid="uid://dn2xo1qh12hn7" path="res://assets/full_heart.png" id="3_ew4fu"]
 
@@ -522,6 +522,7 @@ offset_bottom = 40.0
 
 [node name="Heart1" type="TextureRect" parent="Hearts"]
 texture_filter = 1
+layout_mode = 0
 offset_left = -66.0
 offset_top = -112.0
 offset_right = -26.0
@@ -530,6 +531,7 @@ texture = ExtResource("3_ew4fu")
 
 [node name="Heart2" type="TextureRect" parent="Hearts"]
 texture_filter = 1
+layout_mode = 0
 offset_left = -20.0
 offset_top = -112.0
 offset_right = 20.0
@@ -538,6 +540,7 @@ texture = ExtResource("3_ew4fu")
 
 [node name="Heart3" type="TextureRect" parent="Hearts"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 28.0
 offset_top = -112.0
 offset_right = 68.0
