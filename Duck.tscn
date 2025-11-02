@@ -5,12 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://dn2xo1qh12hn7" path="res://assets/full_heart.png" id="3_ew4fu"]
 
 [sub_resource type="Gradient" id="Gradient_5q5bb"]
+interpolation_mode = 1
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+metadata/_snap_enabled = true
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dnh61"]
 gradient = SubResource("Gradient_5q5bb")
-fill = 1
-fill_from = Vector2(0.46962616, 0.47663552)
-fill_to = Vector2(0.48364487, 0.49299064)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dnh61"]
 atlas = ExtResource("3_5q5bb")
