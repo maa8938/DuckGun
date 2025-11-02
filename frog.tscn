@@ -1,6 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://c1i8of7gfiqd7"]
+[gd_scene load_steps=9 format=3 uid="uid://ci5bemm4jhysm"]
 
-[ext_resource type="Script" path="res://Frog.gd" id="1_r4afn"]
+[ext_resource type="Script" uid="uid://b2brli6en4axj" path="res://Frog.gd" id="1_r4afn"]
 [ext_resource type="Texture2D" uid="uid://g4n8x43sqqfd" path="res://assets/grayFROGA.png" id="2_03smu"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_blpk8"]

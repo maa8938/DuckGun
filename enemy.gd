@@ -46,8 +46,8 @@ func movement(delta):
 	var current_theta = atan(y/x)
 	var deadzone = 10
 
-	var vx = cos(current_theta) * SPEED * delta * -true_x / x
-	var vy = sin(current_theta) * SPEED * delta * -true_y / y
+	var vx = cos(current_theta) * SPEED * -true_x / x
+	var vy = sin(current_theta) * SPEED * -true_y / y
 	
 	if spr != unchanged:
 		sprite_change(spr, left, above, true_y, x)

@@ -25,7 +25,7 @@ func set_sprite():
 
 func init():
 	target_pos = Vector2(500, 500)
-	SPEED = 15000
+	SPEED = 150
 	health = 3
 	cd = randf_range(1.0,3.0)
 # Called every frame. 'delta' is the elapsed time since the previous frame.
