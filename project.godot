@@ -12,7 +12,12 @@ config_version=5
 
 config/name="DuckGun"
 run/main_scene="res://main.tscn"
+<<<<<<< Updated upstream
 config/features=PackedStringArray("4.5", "Mobile")
+=======
+config/features=PackedStringArray("4.3", "Mobile")
+boot_splash/bg_color=Color(0.141176, 1, 0.141176, 1)
+>>>>>>> Stashed changes
 config/icon="res://icon.svg"
 
 [autoload]
