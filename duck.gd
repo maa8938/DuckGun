@@ -2,7 +2,7 @@ extends CharacterBody2D
 
 var health = 3
 
-const SPEED = 35000
+const SPEED = 45000
 
 var pellet_param = []
 signal attention(pos)
@@ -19,7 +19,6 @@ func _process(delta: float) -> void:
 	var mouse_pos = get_global_mouse_position()
 
 	var left = position.x < mouse_pos.x
-	var above = position.y < mouse_pos.y
 	
 	var true_x = position.x - mouse_pos.x
 	var true_y = position.y - mouse_pos.y
