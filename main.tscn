@@ -1,16 +1,28 @@
-[gd_scene load_steps=4 format=3 uid="uid://n8haxwv1tojy"]
+[gd_scene load_steps=6 format=3 uid="uid://n8haxwv1tojy"]
 
+[ext_resource type="Script" uid="uid://cysdkkedejjfu" path="res://camera_2d.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://cchdgno8ahqom" path="res://Duck.tscn" id="1_66mkc"]
-[ext_resource type="PackedScene" uid="uid://c1i8of7gfiqd7" path="res://goose.tscn" id="2_c58p4"]
-[ext_resource type="PackedScene" path="res://wall.tscn" id="3_rev71"]
+[ext_resource type="PackedScene" uid="uid://caiv1nip16x3h" path="res://wall.tscn" id="2_0xm2m"]
+[ext_resource type="PackedScene" path="res://goose.tscn" id="2_c58p4"]
+
+[sub_resource type="GDScript" id="GDScript_lquwl"]
 
 [node name="Main" type="Node2D"]
+script = SubResource("GDScript_lquwl")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+script = ExtResource("1_1bvp3")
 
 [node name="Duck" parent="." instance=ExtResource("1_66mkc")]
-position = Vector2(461, 449)
+position = Vector2(548, 311)
+
+[node name="Wall" parent="." instance=ExtResource("2_0xm2m")]
+position = Vector2(78.5501, 140.625)
 
 [node name="Goose" parent="." instance=ExtResource("2_c58p4")]
+visible = false
 position = Vector2(216, 263)
 
-[node name="Wall" parent="." instance=ExtResource("3_rev71")]
-position = Vector2(590, 187)
+[node name="Goose2" parent="." instance=ExtResource("2_c58p4")]
+visible = false
+position = Vector2(1011, 150)
