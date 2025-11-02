@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c3teofgelhutj"]
+[gd_scene load_steps=6 format=3 uid="uid://c3teofgelhutj"]
 
 [ext_resource type="Script" uid="uid://dy32bgpr527dc" path="res://main.gd" id="1_1hqqg"]
+[ext_resource type="Script" uid="uid://bhm7egtb6rdct" path="res://maze_gen.gd" id="3_aru6h"]
 [ext_resource type="PackedScene" path="res://container.tscn" id="3_s4rml"]
 [ext_resource type="PackedScene" uid="uid://1wyy8ex44uao" path="res://wall.tscn" id="5_ide7d"]
 [ext_resource type="Texture2D" uid="uid://sstsmp4w2uex" path="res://assets/death screen.jpg" id="6_wxh85"]
@@ -14,6 +15,7 @@ script = ExtResource("1_1hqqg")
 zoom = Vector2(0.04, 0.04)
 
 [node name="MazeGenerator" parent="Gameplay" instance=ExtResource("3_s4rml")]
+script = ExtResource("3_aru6h")
 
 [node name="Wall" parent="Gameplay" instance=ExtResource("5_ide7d")]
 position = Vector2(388, 503)

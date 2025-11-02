@@ -16,7 +16,6 @@ func _ready() -> void:
 	
 	# randomly generates 20 rooms with no intersection
 	var tileSet = tilemap.tile_set
-	var normalRoom = tileSet.get_pattern(normalRoomIndex)
 	
 	# sets every tile to grass
 	for i in range(gridSize):
