@@ -11,6 +11,7 @@ var pellet_param = []
 var i_frames = 0
 signal attention(pos)
 signal died
+signal win
 
 @onready var sprite = $AnimatedSprite2D
 @onready var PELLET = preload("res://pellet.tscn")
@@ -76,6 +77,9 @@ func _process(delta: float) -> void:
 			sprite.modulate = Color(1,1,1,1)
 	if i_frames > 0:
 		i_frames -= delta
+		
+	# win check
+	#if ($winCheck/CollisionShape2D.)
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
@@ -100,3 +104,6 @@ func hurt():
 		hearts.remove_child(hearts.get_child(health))
 	elif health <= 0:
 		died.emit()
+		
+#func win():
+	#win.emit()

@@ -37,8 +37,7 @@ enum room_index_enum {
 var new_room_indexes = {
 	# structured as follows: key = input dir, val = dict(key = output dirs, val = index)
 	"S": {
-		("N"): 1 #TODO: Change to rotate the thing by 90 degrees,
-		()
+		("N"): 28
 	}
 }
 var path_indexes = {
