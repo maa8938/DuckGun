@@ -2,22 +2,44 @@
 
 [ext_resource type="Script" path="res://camera_2d.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://cchdgno8ahqom" path="res://Duck.tscn" id="1_66mkc"]
-[ext_resource type="PackedScene" path="res://wall.tscn" id="2_0xm2m"]
+[ext_resource type="Script" path="res://main.gd" id="1_jbpe8"]
+[ext_resource type="PackedScene" uid="uid://1wyy8ex44uao" path="res://wall.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://c1i8of7gfiqd7" path="res://frog.tscn" id="2_c58p4"]
 
-[sub_resource type="GDScript" id="GDScript_lquwl"]
-
 [node name="Main" type="Node2D"]
-script = SubResource("GDScript_lquwl")
+script = ExtResource("1_jbpe8")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Gameplay" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Gameplay"]
+position = Vector2(575, 327)
 script = ExtResource("1_1bvp3")
 
-[node name="Duck" parent="." instance=ExtResource("1_66mkc")]
-position = Vector2(548, 311)
+[node name="Duck" parent="Gameplay" instance=ExtResource("1_66mkc")]
+position = Vector2(281, 206)
 
-[node name="Wall" parent="." instance=ExtResource("2_0xm2m")]
-position = Vector2(78.5501, 140.625)
+[node name="Frog" parent="Gameplay" instance=ExtResource("2_c58p4")]
+position = Vector2(954, 517)
 
-[node name="Frog" parent="." instance=ExtResource("2_c58p4")]
-position = Vector2(219, 554)
+[node name="Frog2" parent="Gameplay" instance=ExtResource("2_c58p4")]
+position = Vector2(931, 62)
+
+[node name="Wall" parent="Gameplay" instance=ExtResource("2_0xm2m")]
+position = Vector2(388, 503)
+
+[node name="Loss Screen" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Loss Screen"]
+layout_mode = 0
+offset_left = 378.0
+offset_top = 36.0
+offset_right = 935.0
+offset_bottom = 334.0
+text = "PLEASE DIE"
+
+[connection signal="died" from="Gameplay/Duck" to="." method="_on_duck_died"]

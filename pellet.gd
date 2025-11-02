@@ -1,9 +1,10 @@
 extends Node2D
 
 var theta
-var dt = 0
 var delta_x = 0
 var delta_y = 0
+var life_time_end = 0.75
+var life_time = 0
 const SPEED = 150
 
 # Called when the node enters the scene tree for the first time.
@@ -18,12 +19,18 @@ func Pellet(pos: Vector2, pp):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:	
-	dt += delta
-	if dt > 1 / 60:
-		dt -= 1/60
-		position.x += delta_x * delta * SPEED
-		position.y += delta_y * delta * SPEED
+	life_time += delta
+	position.x += delta_x * delta * SPEED
+	position.y += delta_y * delta * SPEED
+	if life_time >= life_time_end:
+		queue_free()
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	area.get_parent().hurt()
+	var parent = area.get_parent()
+	var type = parent.get_class()
+	print(type)
+	if type == "CharacterBody2D":
+		area.get_parent().hurt()
+	queue_free()
+	

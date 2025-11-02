@@ -1,19 +1,32 @@
-[gd_scene load_steps=3 format=3 uid="uid://caiv1nip16x3h"]
+[gd_scene load_steps=4 format=3 uid="uid://1wyy8ex44uao"]
 
 [ext_resource type="Texture2D" uid="uid://dtgdfhpmnrjem" path="res://icon.svg" id="1_xxgf6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y4f30"]
 size = Vector2(126.667, 120)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5twi5"]
+size = Vector2(124, 127)
+
 [node name="Wall" type="Node2D" groups=["Walls"]]
 metadata/name = "wall"
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(110, -12)
+position = Vector2(1, 1)
 texture = ExtResource("1_xxgf6")
 
 [node name="Area2D" type="StaticBody2D" parent="." groups=["Walls"]]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(110, -12)
+position = Vector2(1, 1)
 shape = SubResource("RectangleShape2D_y4f30")
+
+[node name="BulletDetection" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BulletDetection"]
+light_mask = 9
+visibility_layer = 9
+position = Vector2(1, 0.5)
+shape = SubResource("RectangleShape2D_5twi5")

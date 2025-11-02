@@ -9,10 +9,11 @@ var last_time = 0
 var health 
 const unchanged = null
 var spr
+var ouch_time = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	init()
-	var duck = get_tree().current_scene.get_node("Duck")
+	var duck = get_tree().current_scene.get_node("Gameplay").get_node("Duck")
 	duck.attention.connect(on_attention)
 	
 
@@ -21,7 +22,10 @@ func init():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	pass
+	if ouch_time > 0:
+		ouch_time -= delta
+	else:
+		spr.modulate = Color(1,1,1,1)
 	
 	
 func attack_duck():
@@ -76,5 +80,7 @@ func on_attention():
 func hurt():
 	if health > 1:
 		health -= 1
+		spr.modulate = Color.RED
+		ouch_time = 0.1
 	else: 
 		queue_free()

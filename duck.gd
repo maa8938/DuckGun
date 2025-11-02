@@ -1,11 +1,14 @@
 extends CharacterBody2D
 
 var health = 3
-
+var cd = 0.5
+var cooling_time = 0
 const SPEED = 35000
-
+var ouch_time = 0
 var pellet_param = []
+var i_frames = 0
 signal attention(pos)
+signal died
 
 @onready var sprite = $AnimatedSprite2D
 @onready var PELLET = preload("res://pellet.tscn")
@@ -31,7 +34,9 @@ func _process(delta: float) -> void:
 	velocity.x = cos(current_theta) * SPEED * delta * -true_x / x
 	velocity.y = sin(current_theta) * SPEED * delta * -true_y / y
 	
-
+	if cooling_time > 0:
+		cooling_time -= delta
+	
 	# animation if statements
 	if (true_y / x) > 3.5:
 		sprite.animation = "back"
@@ -59,6 +64,13 @@ func _process(delta: float) -> void:
 	pellet_param = [current_theta, velocity.x / 100, velocity.y / 100]
 	if velocity.x != 0 or velocity.y != 0:
 		attention.emit()
+	
+	if ouch_time > 0:
+		ouch_time -= delta
+		if ouch_time <= 0:
+			sprite.modulate = Color(1,1,1,1)
+	if i_frames > 0:
+		i_frames -= delta
 
 func _physics_process(delta: float) -> void:
 	move_and_slide()
@@ -67,13 +79,21 @@ func blast():
 	var pellet = PELLET.instantiate()
 	pellet.Pellet(position, pellet_param)
 	get_tree().current_scene.add_child(pellet)
+	cooling_time = cd
 	attention.emit()
 
 func _input(event: InputEvent) -> void:
-	if (event.is_action_released("left_click") or event.is_action_pressed("space")) and sprite.animation != "idle":
+	if (event.is_action_released("left_click") or event.is_action_pressed("space")) and sprite.animation != "idle" and cooling_time <= 0:
 		blast()
 
 func hurt():
-	if health > 0:
+	if health > 0 && i_frames <= 0:
 		health -= 1
+		sprite.modulate = Color.RED
+		ouch_time = 0.1
+		i_frames = 0.3
+		var hearts = get_node("Hearts")
+		hearts.remove_child(hearts.get_child(health))
+	elif health <= 0:
+		died.emit()
 		

@@ -25,9 +25,7 @@ func init():
 	SPEED = 15000
 	health = 3
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-	
+
 func _physics_process(delta: float) -> void:
 	var dv_xy = movement(delta)
 	velocity.x = dv_xy[0]
@@ -42,3 +40,7 @@ func on_attention():
 
 
 	
+
+
+func _on_area_2d_area_entered(area: Area2D) -> void:
+	area.get_parent().hurt()
