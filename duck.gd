@@ -22,7 +22,6 @@ func _process(delta: float) -> void:
 	var mouse_pos = get_global_mouse_position()
 
 	var left = position.x < mouse_pos.x
-	var above = position.y < mouse_pos.y
 	
 	var true_x = position.x - mouse_pos.x
 	var true_y = position.y - mouse_pos.y
@@ -36,7 +35,7 @@ func _process(delta: float) -> void:
 	
 	if cooling_time > 0:
 		cooling_time -= delta
-	
+
 	# animation if statements
 	if (true_y / x) > 3.5:
 		sprite.animation = "back"
@@ -64,7 +63,7 @@ func _process(delta: float) -> void:
 	pellet_param = [current_theta, velocity.x / 100, velocity.y / 100]
 	if velocity.x != 0 or velocity.y != 0:
 		attention.emit()
-	
+
 	if ouch_time > 0:
 		ouch_time -= delta
 		if ouch_time <= 0:
@@ -96,4 +95,4 @@ func hurt():
 		hearts.remove_child(hearts.get_child(health))
 	elif health <= 0:
 		died.emit()
-		
+
