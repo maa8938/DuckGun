@@ -5,7 +5,7 @@ var delta_x = 0
 var delta_y = 0
 var life_time_end = 0.75
 var life_time = 0
-const SPEED = 150
+const SPEED = 15/2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

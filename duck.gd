@@ -5,7 +5,7 @@ var cd = 0.5
 var cooling_time = 0
 # const SPEED = 400
 # TODO: Change later to 400 when actually doing things. This is for testing only
-const SPEED = 1000
+const SPEED = 400
 var ouch_time = 0
 var pellet_param = []
 var i_frames = 0
@@ -30,16 +30,24 @@ func _process(delta: float) -> void:
 	var x = abs(true_x)
 	var y = abs(true_y)
 	
-	var current_theta = atan(y/x)
-
-	velocity.x = cos(current_theta) * SPEED * -true_x / x
-	velocity.y = sin(current_theta) * SPEED * -true_y / y
+	var a = x
+	var o = y
+	
+	var h = (a**2 + o**2)**0.5
+	
+	velocity.x = a/h * SPEED * -true_x / x
+	velocity.y = o/h * SPEED * -true_y / y
 	
 	if cooling_time > 0:
 		cooling_time -= delta
 
 	# animation if statements
-	if (true_y / x) > 3.5:
+	if (x**2 + y**2)**0.5 < 50:
+		sprite.animation = "idle"
+		sprite.play()
+		velocity.x = 0
+		velocity.y = 0
+	elif (true_y / x) > 3.5:
 		sprite.animation = "back"
 		sprite.play()
 		sprite.flip_h = false
@@ -56,13 +64,9 @@ func _process(delta: float) -> void:
 		sprite.play()
 		sprite.flip_h = false
 	# deadzone implementation
-	if (x**2 + y**2)**0.5 < 50:
-		sprite.animation = "idle"
-		sprite.play()
-		velocity.x = 0
-		velocity.y = 0
+	
 
-	pellet_param = [current_theta, velocity.x / 100, velocity.y / 100]
+	pellet_param = [asin(o/h), velocity.x, velocity.y]
 	if velocity.x != 0 or velocity.y != 0:
 		attention.emit()
 

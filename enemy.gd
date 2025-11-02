@@ -29,7 +29,7 @@ func _process(delta: float) -> void:
 		ouch_time -= delta
 	else:
 		spr.modulate = base_modulate
-	print(health, self)
+	#print(health, self)
 	
 	
 func attack_duck():
