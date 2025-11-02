@@ -94,7 +94,6 @@ func on_attention():
 	pass
 	
 func hurt():
-	print("FROG OWWIE")
 	if health > 1:
 		health -= 1
 		spr.modulate = Color.RED

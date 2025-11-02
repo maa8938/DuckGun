@@ -1,9 +1,12 @@
 extends "enemy.gd"
 
-# Called when the node enters the scene tree for the first time.
 
+
+# Called when the node enters the scene tree for the first time.
 func sprite_change(sprite, left, above, true_y, x):
+	# idle
 	if abs(x) < 10 or abs(true_y) < 10:
+		
 		sprite.play()
 	elif (true_y / x) > 3.5:
 		sprite.play()
@@ -51,10 +54,6 @@ func on_attention():
 			wait = false 
 			target_pos = next_pos
 
-
-	
-
-
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	print("FROG OWWIE")
+	print("SLIME OWWIE")
 	area.get_parent().hurt()
