@@ -1,6 +1,6 @@
 [gd_scene load_steps=70 format=3 uid="uid://cchdgno8ahqom"]
 
-[ext_resource type="Script" uid="uid://cklunfjrbp2y6" path="res://duck.gd" id="1_wat76"]
+[ext_resource type="Script" path="res://duck.gd" id="1_wat76"]
 [ext_resource type="Texture2D" uid="uid://cvs4d7c10pe4k" path="res://assets/duck/duck-Sheet.png" id="3_5q5bb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dnh61"]
@@ -499,7 +499,13 @@ scale = Vector2(6.7, 6.7)
 sprite_frames = SubResource("SpriteFrames_3i3rg")
 animation = &"back"
 autoplay = "idle"
-frame_progress = 0.297054
+frame_progress = 0.939972
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_48mle")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_48mle")

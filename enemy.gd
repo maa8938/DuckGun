@@ -6,7 +6,9 @@ var SPEED # the enemy's speed
 var damage # the number of hearts that are removed
 var radius # kill zone for the dude
 var last_time = 0
-
+var health 
+const unchanged = null
+var spr
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	init()
@@ -21,6 +23,7 @@ func init():
 func _process(delta: float) -> void:
 	pass
 	
+	
 func attack_duck():
 	get_tree().current_scene.find_child("Duck").hurt()
 
@@ -30,16 +33,43 @@ func movement(delta):
 	
 	var true_x = position.x - target_pos.x
 	var true_y = position.y - target_pos.y
-
 	var x = abs(true_x)
 	var y = abs(true_y)
 	
 	var current_theta = atan(y/x)
+	var deadzone = 10
+
+	var vx = cos(current_theta) * SPEED * delta * -true_x / x
+	var vy = sin(current_theta) * SPEED * delta * -true_y / y
 	
-	var delta_x = cos(current_theta) * SPEED * delta
-	var delta_y = sin(current_theta) * SPEED * delta
+	if spr != unchanged:
+		sprite_change(spr, left, above, true_y, x)
+	else:
+		set_sprite()
 	
-	return [delta_x, delta_y]
+	return [vx, vy]
+
+func set_sprite():
+	pass
+
+func sprite_change(sprite, left, above, true_y, x):
+	if not left:
+		sprite.animation = "side"
+		sprite.play()
+		sprite.flip_h = true
+	else:
+		sprite.animation = "side"
+		sprite.play()
+		sprite.flip_h = false
+
+	if (true_y / x) > 3.5:
+		sprite.animation = "back"
+		sprite.play()
+		sprite.flip_h = false
+	if (true_y / x) < -3.5:
+		sprite.animation = "front"
+		sprite.play()
+		sprite.flip_h = false
 
 func on_attention():
 	pass

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6e1b3eeillpg"
-path="res://.godot/imported/rat.png-f2aaa2762927848cb0de488ebf987a84.ctex"
+uid="uid://g4n8x43sqqfd"
+path="res://.godot/imported/grayFROGA.png-03aee531e2f21f9f1ba4b2b41d337b94.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Rodents Rat Rework 1.0/PNG/32x32/rat.png"
-dest_files=["res://.godot/imported/rat.png-f2aaa2762927848cb0de488ebf987a84.ctex"]
+source_file="res://assets/grayFROGA.png"
+dest_files=["res://.godot/imported/grayFROGA.png-03aee531e2f21f9f1ba4b2b41d337b94.ctex"]
 
 [params]
 

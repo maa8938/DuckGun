@@ -2,14 +2,31 @@ extends "enemy.gd"
 
 # Called when the node enters the scene tree for the first time.
 
-@onready var sprite = $Sprite2D
+func sprite_change(sprite, left, above, true_y, x):
+	if not left:
+		sprite.play()
+		sprite.rotation = deg_to_rad(90)
+	else:
+		sprite.play()
+		sprite.rotation = deg_to_rad(270)
+
+	if (true_y / x) > 3.5:
+		sprite.play()
+		sprite.rotation = deg_to_rad(180)
+	if (true_y / x) < -3.5:
+		sprite.play()
+		sprite.rotation = deg_to_rad(0)
+	
+
+func set_sprite():
+	spr = $Sprite2D
 
 func init():
 	target_pos = Vector2(500, 500)
 	SPEED = 15000
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	sprite_change(delta, sprite)
+	pass
 	
 func _physics_process(delta: float) -> void:
 	var dv_xy = movement(delta)

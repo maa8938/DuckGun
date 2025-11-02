@@ -7,7 +7,7 @@ const SPEED = 35000
 var pellet_param = []
 signal attention(pos)
 
-@onready var 	sprite = $AnimatedSprite2D
+@onready var sprite = $AnimatedSprite2D
 @onready var PELLET = preload("res://pellet.tscn")
 
 # Called when the node enters the scene tree for the first time.
@@ -38,20 +38,19 @@ func _process(delta: float) -> void:
 		sprite.animation = "side"
 		sprite.play()
 		sprite.flip_h = true
+	elif (true_y / x) > 3.5:
+		sprite.animation = "back"
+		sprite.play()
+		sprite.flip_h = false
+	elif (true_y / x) < -3.5:
+		sprite.animation = "front"
+		sprite.play()
+		sprite.flip_h = false
 	else:
 		sprite.animation = "side"
 		sprite.play()
 		sprite.flip_h = false
-
-	if (true_y / x) > 3.5:
-		sprite.animation = "back"
-		sprite.play()
-		sprite.flip_h = false
-	if (true_y / x) < -3.5:
-		sprite.animation = "front"
-		sprite.play()
-		sprite.flip_h = false
-
+		
 	# deadzone implementation
 	if (x**2 + y**2)**0.5 < 10:
 		sprite.animation = "idle"
@@ -74,7 +73,6 @@ func blast():
 
 func _input(event: InputEvent) -> void:
 	if (event.is_action_released("left_click") or event.is_action_pressed("space")) and sprite.animation != "idle":
-		print("Press")
 		blast()
 
 func hurt():
