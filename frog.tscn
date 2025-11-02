@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://c1i8of7gfiqd7"]
+[gd_scene load_steps=9 format=3 uid="uid://c1i8of7gfiqd7"]
 
 [ext_resource type="Script" path="res://Frog.gd" id="1_r4afn"]
 [ext_resource type="Texture2D" uid="uid://g4n8x43sqqfd" path="res://assets/grayFROGA.png" id="2_03smu"]
@@ -33,7 +33,10 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_dkcd8"]
-size = Vector2(112.5, 109.75)
+size = Vector2(95.625, 95)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p4ovi"]
+size = Vector2(103, 101)
 
 [node name="Frog" type="CharacterBody2D"]
 script = ExtResource("1_r4afn")
@@ -46,14 +49,15 @@ sprite_frames = SubResource("SpriteFrames_aujhf")
 animation = &"frogg"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -4)
+position = Vector2(0.1875, -1.5)
 shape = SubResource("RectangleShape2D_dkcd8")
 
 [node name="Area2D" type="Area2D" parent="."]
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(0, -4)
-shape = SubResource("RectangleShape2D_dkcd8")
+light_mask = 2
+position = Vector2(0.5, -1.5)
+shape = SubResource("RectangleShape2D_p4ovi")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

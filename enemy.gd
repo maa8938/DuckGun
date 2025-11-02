@@ -53,7 +53,15 @@ func set_sprite():
 	pass
 
 func sprite_change(sprite, left, above, true_y, x):
-	if not left:
+	if (true_y / x) > 3.5:
+		sprite.animation = "back"
+		sprite.play()
+		sprite.flip_h = false
+	elif (true_y / x) < -3.5:
+		sprite.animation = "front"
+		sprite.play()
+		sprite.flip_h = false
+	elif not left:
 		sprite.animation = "side"
 		sprite.play()
 		sprite.flip_h = true
@@ -62,14 +70,11 @@ func sprite_change(sprite, left, above, true_y, x):
 		sprite.play()
 		sprite.flip_h = false
 
-	if (true_y / x) > 3.5:
-		sprite.animation = "back"
-		sprite.play()
-		sprite.flip_h = false
-	if (true_y / x) < -3.5:
-		sprite.animation = "front"
-		sprite.play()
-		sprite.flip_h = false
-
 func on_attention():
 	pass
+	
+func hurt():
+	if health > 1:
+		health -= 1
+	else: 
+		queue_free()

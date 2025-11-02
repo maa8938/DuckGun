@@ -76,3 +76,4 @@ func _input(event: InputEvent) -> void:
 func hurt():
 	if health > 0:
 		health -= 1
+		

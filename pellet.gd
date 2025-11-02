@@ -4,7 +4,7 @@ var theta
 var dt = 0
 var delta_x = 0
 var delta_y = 0
-const SPEED = 350
+const SPEED = 150
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,4 +26,4 @@ func _process(delta: float) -> void:
 
 
 func _on_area_2d_area_entered(area: Area2D) -> void:
-	area.get_parent().queue_free()
+	area.get_parent().hurt()
