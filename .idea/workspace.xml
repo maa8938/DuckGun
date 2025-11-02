@@ -5,13 +5,23 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="806210d9-3295-412e-919e-33330612569f" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/new_duck.tscn" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wall.tscn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Duck.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/Duck.tscn" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Globals.gd.uid" beforeDir="false" afterPath="$PROJECT_DIR$/Globals.gd.uid" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Frog.gd.uid" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/goose.tscn" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Animated Slime Spritesheet.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Animated Slime Spritesheet.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Cobra Chicken Goose/Flap.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Cobra Chicken Goose/Flap.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Cobra Chicken Goose/Idle.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Cobra Chicken Goose/Idle.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Cobra Chicken Goose/Run.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Cobra Chicken Goose/Run.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Cobra Chicken Goose/Walk.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Cobra Chicken Goose/Walk.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Hedge Maze Tiles.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Hedge Maze Tiles.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Rodents Rat Rework 1.0/PNG/32x32/mouse.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Rodents Rat Rework 1.0/PNG/32x32/mouse.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Rodents Rat Rework 1.0/PNG/32x32/rat.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Rodents Rat Rework 1.0/PNG/32x32/rat.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/Rodents Rat Rework 1.0/preview.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/Rodents Rat Rework 1.0/preview.png.import" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/duck/duck-Sheet.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/duck/duck-Sheet.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/grayFROGA.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/grayFROGA.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/rotten egg.png.import" beforeDir="false" afterPath="$PROJECT_DIR$/assets/rotten egg.png.import" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/camera_2d.gd" beforeDir="false" afterPath="$PROJECT_DIR$/camera_2d.gd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/duck.gd" beforeDir="false" afterPath="$PROJECT_DIR$/duck.gd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hedge_maze_map.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/hedge_maze_map.tscn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/icon.svg.import" beforeDir="false" afterPath="$PROJECT_DIR$/icon.svg.import" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.tscn" beforeDir="false" afterPath="$PROJECT_DIR$/main.tscn" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/project.godot" beforeDir="false" afterPath="$PROJECT_DIR$/project.godot" afterDir="false" />
@@ -54,7 +64,7 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="GdScript Start and Debug.Player GDScript">
+  <component name="RunManager">
     <configuration name="Player GDScript" type="GDSCRIPT_DEBUG_RUN_CONFIGURATION" factoryName="GdScriptRunFactory" show_console_on_std_err="false" show_console_on_std_out="false" port="6006">
       <option name="address" value="127.0.0.1" />
       <option name="allowRunningInParallel" value="false" />

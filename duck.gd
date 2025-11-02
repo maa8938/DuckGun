@@ -95,4 +95,3 @@ func hurt():
 		hearts.remove_child(hearts.get_child(health))
 	elif health <= 0:
 		died.emit()
-
