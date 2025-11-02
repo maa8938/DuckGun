@@ -33,7 +33,15 @@ func _process(delta: float) -> void:
 	
 
 	# animation if statements
-	if not left:
+	if (true_y / x) > 3.5:
+		sprite.animation = "back"
+		sprite.play()
+		sprite.flip_h = false
+	elif (true_y / x) < -3.5:
+		sprite.animation = "front"
+		sprite.play()
+		sprite.flip_h = false
+	elif not left:
 		sprite.animation = "side"
 		sprite.play()
 		sprite.flip_h = true
@@ -41,16 +49,6 @@ func _process(delta: float) -> void:
 		sprite.animation = "side"
 		sprite.play()
 		sprite.flip_h = false
-
-	if (true_y / x) > 3.5:
-		sprite.animation = "back"
-		sprite.play()
-		sprite.flip_h = false
-	if (true_y / x) < -3.5:
-		sprite.animation = "front"
-		sprite.play()
-		sprite.flip_h = false
-
 	# deadzone implementation
 	if (x**2 + y**2)**0.5 < 50:
 		sprite.animation = "idle"
