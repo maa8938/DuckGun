@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://n8haxwv1tojy"]
+[gd_scene load_steps=5 format=3 uid="uid://n8haxwv1tojy"]
 
 [ext_resource type="PackedScene" uid="uid://cchdgno8ahqom" path="res://Duck.tscn" id="1_66mkc"]
 [ext_resource type="PackedScene" uid="uid://caiv1nip16x3h" path="res://wall.tscn" id="2_0xm2m"]
-[ext_resource type="PackedScene" path="res://goose.tscn" id="2_c58p4"]
+[ext_resource type="PackedScene" uid="uid://biuuar1ory47j" path="res://maze_generator.tscn" id="3_h2yge"]
+[ext_resource type="PackedScene" uid="uid://cb5atkqp8am00" path="res://hedge_maze_map.tscn" id="4_1bvp3"]
 
 [node name="Main" type="Node2D"]
 
@@ -12,10 +13,7 @@ position = Vector2(461, 449)
 [node name="Wall" parent="." instance=ExtResource("2_0xm2m")]
 position = Vector2(78.5501, 140.625)
 
-[node name="Goose" parent="." instance=ExtResource("2_c58p4")]
-visible = false
-position = Vector2(216, 263)
+[node name="Maze Generator" parent="." instance=ExtResource("3_h2yge")]
 
-[node name="Goose2" parent="." instance=ExtResource("2_c58p4")]
-visible = false
-position = Vector2(1011, 150)
+[node name="HedgeMazeMap" parent="Maze Generator" instance=ExtResource("4_1bvp3")]
+collision_enabled = false
