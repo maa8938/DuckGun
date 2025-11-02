@@ -79,7 +79,6 @@ func blast():
 	pellet.Pellet(position, pellet_param)
 	get_tree().current_scene.add_child(pellet)
 	cooling_time = cd
-	attention.emit()
 
 func _input(event: InputEvent) -> void:
 	if (event.is_action_released("left_click") or event.is_action_pressed("space")) and sprite.animation != "idle" and cooling_time <= 0:

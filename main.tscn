@@ -28,6 +28,15 @@ position = Vector2(931, 62)
 [node name="Wall" parent="Gameplay" instance=ExtResource("2_0xm2m")]
 position = Vector2(388, 503)
 
+[node name="Frog3" parent="Gameplay" instance=ExtResource("2_c58p4")]
+position = Vector2(82, 425)
+
+[node name="Frog4" parent="Gameplay" instance=ExtResource("2_c58p4")]
+position = Vector2(841, 302)
+
+[node name="Frog5" parent="Gameplay" instance=ExtResource("2_c58p4")]
+position = Vector2(639, 338)
+
 [node name="Loss Screen" type="Control" parent="."]
 visible = false
 layout_mode = 3

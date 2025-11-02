@@ -494,6 +494,7 @@ size = Vector2(126, 128)
 size = Vector2(124, 128)
 
 [node name="Duck" type="CharacterBody2D"]
+motion_mode = 1
 script = ExtResource("1_wat76")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -522,6 +523,7 @@ offset_bottom = 40.0
 
 [node name="Heart1" type="TextureRect" parent="Hearts"]
 texture_filter = 1
+layout_mode = 0
 offset_left = -66.0
 offset_top = -112.0
 offset_right = -26.0
@@ -530,6 +532,7 @@ texture = ExtResource("3_ew4fu")
 
 [node name="Heart2" type="TextureRect" parent="Hearts"]
 texture_filter = 1
+layout_mode = 0
 offset_left = -20.0
 offset_top = -112.0
 offset_right = 20.0
@@ -538,6 +541,7 @@ texture = ExtResource("3_ew4fu")
 
 [node name="Heart3" type="TextureRect" parent="Hearts"]
 texture_filter = 1
+layout_mode = 0
 offset_left = 28.0
 offset_top = -112.0
 offset_right = 68.0

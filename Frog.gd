@@ -25,9 +25,11 @@ func set_sprite():
 
 func init():
 	target_pos = Vector2(500, 500)
-	SPEED = 150
+	SPEED = randi_range(100, 250)
 	health = 3
 	cd = randf_range(1.0,3.0)
+	base_modulate = Color(randf(), randf(), randf())
+	$Sprite2D.modulate = base_modulate
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 
 func _physics_process(delta: float) -> void:
@@ -38,10 +40,12 @@ func _physics_process(delta: float) -> void:
 	
 func on_attention():
 	var curr_time = Time.get_unix_time_from_system()
-	if curr_time - last_time > cd:
+	if curr_time - last_time > cd or position == target_pos:
 		last_time = curr_time
 		
 		var next_pos = get_tree().current_scene.find_child("Duck").position
+		next_pos.x += randi_range(-250, 250)
+		next_pos.y += randi_range(-250, 250)
 		if next_pos == target_pos:
 			wait = true
 		else:

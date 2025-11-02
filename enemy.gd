@@ -12,6 +12,7 @@ var wait = false
 const unchanged = null
 var spr
 var ouch_time = 0
+var base_modulate = Color(1,1,1,1)
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	init()
@@ -27,7 +28,7 @@ func _process(delta: float) -> void:
 	if ouch_time > 0:
 		ouch_time -= delta
 	else:
-		spr.modulate = Color(1,1,1,1)
+		spr.modulate = base_modulate
 	print(health, self)
 	
 	
@@ -35,6 +36,8 @@ func attack_duck():
 	get_tree().current_scene.find_child("Duck").hurt()
 
 func movement(delta):
+	if position == target_pos:
+		return [0,0]
 	var left = position.x < target_pos.x
 	var above = position.y < target_pos.y
 	
@@ -43,11 +46,21 @@ func movement(delta):
 	var x = abs(true_x)
 	var y = abs(true_y)
 	
-	var current_theta = atan(y/x)
+	if x == 0:
+		x = 0.01
+	if y == 0:
+		y = 0.01
+	
+	var h = sqrt((x**2) + (y**2))
+	var a = x
+	var o = y
+	
+	
+	#var current_theta = atan(y/x)
 	var deadzone = 10
 
-	var vx = cos(current_theta) * SPEED * -true_x / x
-	var vy = sin(current_theta) * SPEED * -true_y / y
+	var vx = a/h * SPEED * -true_x / x
+	var vy = o/h * SPEED * -true_y / y
 	
 	if spr != unchanged:
 		sprite_change(spr, left, above, true_y, x)
