@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=3 uid="uid://bjqo08abtb7ms"]
+
+[ext_resource type="Script" uid="uid://dqiafqsmmqqk3" path="res://maze_generator.gd" id="1_knnee"]
+[ext_resource type="PackedScene" uid="uid://b5hpumuarq15w" path="res://hedge_maze_map.tscn" id="2_wndvp"]
+[ext_resource type="Script" uid="uid://8d8sh7lbms6p" path="res://hedge_maze_map.gd" id="3_wndvp"]
+
+[node name="MazeGenerator" type="Container"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_knnee")
+
+[node name="HedgeMazeMap" parent="." instance=ExtResource("2_wndvp")]
+tile_map_data = PackedByteArray()
+script = ExtResource("3_wndvp")
