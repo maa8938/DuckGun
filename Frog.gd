@@ -3,21 +3,20 @@ extends "enemy.gd"
 # Called when the node enters the scene tree for the first time.
 
 func sprite_change(sprite, left, above, true_y, x):
-	if wait:
-		sprite.stop()
+	if abs(x) < 10 or abs(true_y) < 10:
+		sprite.play()
+	elif (true_y / x) > 3.5:
+		sprite.play()
+		sprite.rotation = deg_to_rad(180)
+	elif (true_y / x) < -3.5:
+		sprite.play()
+		sprite.rotation = deg_to_rad(0)
+	elif not left:
+		sprite.play()
+		sprite.rotation = deg_to_rad(90)
 	else:
-		if (true_y / x) > 3.5:
-			sprite.play()
-			sprite.rotation = deg_to_rad(180)
-		elif (true_y / x) < -3.5:
-			sprite.play()
-			sprite.rotation = deg_to_rad(0)
-		elif not left:
-			sprite.play()
-			sprite.rotation = deg_to_rad(90)
-		else:
-			sprite.play()
-			sprite.rotation = deg_to_rad(270)
+		sprite.play()
+		sprite.rotation = deg_to_rad(270)
 	
 
 func set_sprite():
