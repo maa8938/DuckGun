@@ -10,5 +10,6 @@ offset_bottom = 40.0
 script = ExtResource("1_knnee")
 
 [node name="HedgeMazeMap" parent="." instance=ExtResource("2_wndvp")]
+scale = Vector2(3, 3)
 tile_map_data = PackedByteArray()
 script = ExtResource("3_wndvp")

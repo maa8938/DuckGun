@@ -3,18 +3,25 @@ extends Node
 const horzlineIndex = 0
 const cornerIndex = 2
 const normalRoomIndex = 3
-const RoomSize = 70
-const midWallRoomIndex = 4;
-const gridSize = 700
+const RoomSize = 100
+const midWallRoomIndex = 4
+const gridSize = 800
+const grassTileID = 0
 
 @onready var tilemap = $HedgeMazeMap
 
 func _ready() -> void:
 	# called whenever the object enters the scene
 	
-	# randomly generates 10 rooms with no intersection
+	# randomly generates 20 rooms with no intersection
 	var tileSet = tilemap.tile_set
 	var normalRoom = tileSet.get_pattern(normalRoomIndex)
+	
+	# sets every tile to grass
+	for i in range(gridSize):
+		for j in range(gridSize):
+			tilemap.set_cell(Vector2i(i - 350, j - 350), grassTileID, Vector2i(1, 0))
+		
 	# array of used
 	var roomArray = []
 	var randX
@@ -22,7 +29,7 @@ func _ready() -> void:
 	var position
 	var positionCheck
 	
-	for i in range(10):
+	for i in range(15):
 		positionCheck = false
 		while positionCheck == false:
 			var isInRange = false
