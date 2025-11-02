@@ -1,6 +1,7 @@
 extends "enemy.gd"
 
-
+@onready var sprite = $AnimatedSprite2D
+@onready var PELLET = preload("res://pellet.tscn")
 
 # Called when the node enters the scene tree for the first time.
 func sprite_change(sprite, left, above, true_y, x):

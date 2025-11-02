@@ -26,7 +26,20 @@ var logical_grid = []
 var logical_grid_size = 50 # 50 logical units wide
 
 var room_indexes = {
+	# number of entrances the room has (in the order north, east, south, west)
 	1: [14, 8, 13, 12], 2: [7, 7, 9, 9], 3: [10, 17, 16, 15], 4: [11, 11, 11, 11]
+}
+
+enum room_index_enum {
+	
+}
+
+var new_room_indexes = {
+	# structured as follows: key = input dir, val = dict(key = output dirs, val = index)
+	"S": {
+		("N"): 1 #TODO: Change to rotate the thing by 90 degrees,
+		()
+	}
 }
 var path_indexes = {
 	0: [20, 6, 19, 21], 1: [2, 2, 18, 18], 3: [27, 25, 4, 26], 4: [3, 3, 3, 3]

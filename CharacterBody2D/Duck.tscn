@@ -1,16 +1,16 @@
-[gd_scene load_steps=74 format=3 uid="uid://dd417b2l2d1j3"]
+[gd_scene load_steps=74 format=3 uid="uid://cchdgno8ahqom"]
 
 [ext_resource type="Script" uid="uid://cklunfjrbp2y6" path="res://duck.gd" id="1_wat76"]
 [ext_resource type="Texture2D" uid="uid://cvs4d7c10pe4k" path="res://assets/duck/duck-Sheet.png" id="3_5q5bb"]
 [ext_resource type="Texture2D" uid="uid://dn2xo1qh12hn7" path="res://assets/full_heart.png" id="3_ew4fu"]
 
 [sub_resource type="Gradient" id="Gradient_5q5bb"]
-interpolation_mode = 1
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
-metadata/_snap_enabled = true
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_dnh61"]
 gradient = SubResource("Gradient_5q5bb")
+fill = 1
+fill_from = Vector2(0.469626, 0.476636)
+fill_to = Vector2(0.483645, 0.492991)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_dnh61"]
 atlas = ExtResource("3_5q5bb")
