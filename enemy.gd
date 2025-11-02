@@ -6,7 +6,9 @@ var SPEED # the enemy's speed
 var damage # the number of hearts that are removed
 var radius # kill zone for the dude
 var last_time = 0
+var cd 
 var health 
+var wait = false
 const unchanged = null
 var spr
 var ouch_time = 0
@@ -26,6 +28,7 @@ func _process(delta: float) -> void:
 		ouch_time -= delta
 	else:
 		spr.modulate = Color(1,1,1,1)
+	print(health, self)
 	
 	
 func attack_duck():
@@ -78,6 +81,7 @@ func on_attention():
 	pass
 	
 func hurt():
+	print("FROG OWWIE")
 	if health > 1:
 		health -= 1
 		spr.modulate = Color.RED

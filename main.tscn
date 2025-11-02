@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://n8haxwv1tojy"]
+[gd_scene load_steps=7 format=3 uid="uid://n8haxwv1tojy"]
 
 [ext_resource type="Script" path="res://camera_2d.gd" id="1_1bvp3"]
 [ext_resource type="PackedScene" uid="uid://cchdgno8ahqom" path="res://Duck.tscn" id="1_66mkc"]
 [ext_resource type="Script" path="res://main.gd" id="1_jbpe8"]
 [ext_resource type="PackedScene" uid="uid://1wyy8ex44uao" path="res://wall.tscn" id="2_0xm2m"]
 [ext_resource type="PackedScene" uid="uid://c1i8of7gfiqd7" path="res://frog.tscn" id="2_c58p4"]
+[ext_resource type="Texture2D" uid="uid://sstsmp4w2uex" path="res://assets/death screen.jpg" id="6_mhi6q"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_jbpe8")
@@ -36,10 +37,19 @@ offset_bottom = 40.0
 
 [node name="Label" type="Label" parent="Loss Screen"]
 layout_mode = 0
-offset_left = 378.0
-offset_top = 36.0
-offset_right = 935.0
-offset_bottom = 334.0
-text = "PLEASE DIE"
+offset_left = -84.0
+offset_top = -132.0
+offset_right = 87.0
+offset_bottom = -109.0
+text = "womp womp you died"
+
+[node name="TextureRect" type="TextureRect" parent="Loss Screen"]
+layout_mode = 0
+offset_left = -89.0
+offset_top = -92.0
+offset_right = 98.0
+offset_bottom = 177.0
+texture = ExtResource("6_mhi6q")
 
 [connection signal="died" from="Gameplay/Duck" to="." method="_on_duck_died"]
+[connection signal="died" from="Gameplay/Duck" to="Gameplay/Camera2D" method="_on_duck_died"]

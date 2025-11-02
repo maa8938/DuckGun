@@ -491,7 +491,7 @@ animations = [{
 size = Vector2(126, 128)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nybsi"]
-size = Vector2(116, 118)
+size = Vector2(124, 128)
 
 [node name="Duck" type="CharacterBody2D"]
 script = ExtResource("1_wat76")
@@ -503,7 +503,7 @@ scale = Vector2(6.7, 6.7)
 sprite_frames = SubResource("SpriteFrames_3i3rg")
 animation = &"back"
 autoplay = "idle"
-frame_progress = 0.0510122
+frame_progress = 0.125918
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_48mle")
