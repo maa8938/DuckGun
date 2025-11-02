@@ -5,9 +5,9 @@ const cornerIndex = 2
 const normalRoomIndex = 3
 const RoomSize = 60
 const midWallRoomIndex = 4
-const gridSize = 900
+const gridSize = 800
 const grassTileID = 0
-const numOfRooms = 15
+const numOfRooms = 30
 
 @onready var tilemap = $HedgeMazeMap
 
@@ -21,7 +21,7 @@ func _ready() -> void:
 	# sets every tile to grass
 	for i in range(gridSize):
 		for j in range(gridSize):
-			tilemap.set_cell(Vector2i(i - (gridSize / 2), j - (gridSize / 2)), grassTileID, Vector2i(1, 0))
+			tilemap.set_cell(Vector2i(i - 350, j - 350), grassTileID, Vector2i(1, 0))
 		
 	# array of used
 	var roomArray = []
@@ -29,14 +29,13 @@ func _ready() -> void:
 	var randY
 	var position
 	var positionCheck
-	var rangeSize = (gridSize / 2 / RoomSize)
 	
 	for i in range(numOfRooms):
 		positionCheck = false
 		while positionCheck == false:
 			var isInRange = false
-			randX = RoomSize * randi_range(-rangeSize, rangeSize)
-			randY = RoomSize * randi_range(-rangeSize, rangeSize)
+			randX = randi_range(-gridSize / 2 + RoomSize / 2, (gridSize / 2) - RoomSize / 2)
+			randY = randi_range(-gridSize / 2 + RoomSize / 2, (gridSize / 2) - RoomSize / 2)
 			position = Vector2i(randX, randY)
 			for j in range(roomArray.size()):
 				var currentRoom = roomArray.get(j)
