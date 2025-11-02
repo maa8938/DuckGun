@@ -16,7 +16,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	var mouse_pos = get_viewport().get_mouse_position()
+	var mouse_pos = get_global_mouse_position()
 
 	var left = position.x < mouse_pos.x
 	var above = position.y < mouse_pos.y
@@ -27,7 +27,6 @@ func _process(delta: float) -> void:
 	var y = abs(true_y)
 	
 	var current_theta = atan(y/x)
-	var deadzone = 10
 
 	velocity.x = cos(current_theta) * SPEED * delta * -true_x / x
 	velocity.y = sin(current_theta) * SPEED * delta * -true_y / y
@@ -53,12 +52,11 @@ func _process(delta: float) -> void:
 		sprite.flip_h = false
 
 	# deadzone implementation
-	if (x**2 + y**2)**0.5 < 10:
+	if (x**2 + y**2)**0.5 < 50:
 		sprite.animation = "idle"
 		sprite.play()
 		velocity.x = 0
 		velocity.y = 0
-		sprite.flip_h = false
 
 	pellet_param = [current_theta, velocity.x / 100, velocity.y / 100]
 	if velocity.x != 0 or velocity.y != 0:
