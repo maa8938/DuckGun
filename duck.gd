@@ -5,7 +5,7 @@ var cd = 0.5
 var cooling_time = 0
 # const SPEED = 400
 # TODO: Change later to 400 when actually doing things. This is for testing only
-const SPEED = 400
+const SPEED = 600
 var ouch_time = 0
 var pellet_param = []
 var i_frames = 0

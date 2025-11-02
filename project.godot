@@ -27,6 +27,7 @@ project/assembly_name="DuckGun"
 
 Walls=""
 Enemy=""
+player=""
 
 [input]
 

@@ -1,43 +1,35 @@
 extends Container
 
-# --- THIS IS THE FIX ---
-# A "logical 1x1" unit (like a path) is 15x15 tiles.
+# Your tile *count* per unit
 const LOGICAL_SCALE = 15
-# A "logical 3x3" room is 3 "logical units" wide.
 const ROOM_LOGICAL_WIDTH = 3
-# ---------------------
+# Your pixel *size* per tile
+const TILE_PIXELS = 16
 
 # Calculated widths in *tiles*
 const PATH_TILES = LOGICAL_SCALE # 1 * 15 = 15
 const ROOM_TILES = ROOM_LOGICAL_WIDTH * LOGICAL_SCALE # 3 * 15 = 45
 
-# We still use a 750x750 *tile* grid.
+# Calculated widths in *pixels*
+const PATH_PIXELS = PATH_TILES * TILE_PIXELS # 15 * 16 = 240
+const ROOM_PIXELS = ROOM_TILES * TILE_PIXELS # 45 * 16 = 720
+
 var grid_size = 50 * LOGICAL_SCALE # 750
 var rooms = 15
 @onready var tilemap = $HedgeMazeMap
 @onready var tileSet = tilemap.tile_set
 
-# This is the large 750x750 grid, where 1 cell = 1 tile
 var grid = []
 var room_indexes = {
-	1: [14, 8, 13, 12], 
-	2: [7, 7, 9, 9], 
-	3: [10, 17, 16, 15], 
-	4: [11, 11, 11, 11]
+	1: [14, 8, 13, 12], 2: [7, 7, 9, 9], 3: [10, 17, 16, 15], 4: [11, 11, 11, 11]
 }
 var path_indexes = {
-	0: [20, 6, 19, 21], # Dead end
-	1: [2, 2, 18, 18], # Straight
-	# 2: Left turn (REMOVED)
-	3: [27, 25, 4, 26], # T shape
-	4: [3, 3, 3, 3]  # 4 way intersection
+	0: [20, 6, 19, 21], 1: [2, 2, 18, 18], 3: [27, 25, 4, 26], 4: [3, 3, 3, 3]
 }
 
-# --- Generation Tuners ---
-const MIN_PATH_LENGTH = 3  # Min path "segments" before trying to place a room
-const MAX_PATH_LENGTH = 8  # Max path "segments" before FORCING a room
-const ROOM_CHANCE = 0.3    # 30% chance to place a room
-
+const MIN_PATH_LENGTH = 3
+const MAX_PATH_LENGTH = 8
+const ROOM_CHANCE = 0.3
 
 func _ready() -> void:
 	for i in range(grid_size):
@@ -45,17 +37,58 @@ func _ready() -> void:
 		for j in range(grid_size):
 			grid[-1].append(0)
 			
-	# Start tile coordinate (e.g., 15, 15)
 	var X = LOGICAL_SCALE
 	var Y = LOGICAL_SCALE
 	
 	create_room(X, Y, 0)
 
+# --- NEW FUNCTIONS FOR VISIBILITY ---
+
+func _on_area_entered(body, light: PointLight2D):
+	if body.is_in_group("player"):
+		light.enabled = true
+
+func _on_area_exited(body, light: PointLight2D):
+	if body.is_in_group("player"):
+		light.enabled = false
+
+# This function adds the light and trigger area
+func add_visibility_area(tile_pos_x: int, tile_pos_y: int, size_in_pixels: Vector2):
+	# Calculate pixel position
+	var pixel_pos = tilemap.map_to_local(Vector2i(tile_pos_x, tile_pos_y))
+	var centered_pos = pixel_pos + size_in_pixels / 2.0
+	
+	# Create the light
+	var light = PointLight2D.new()
+	var tex = PlaceholderTexture2D.new() # A simple white square
+	tex.size = size_in_pixels
+	light.texture = tex
+	light.enabled = false # Off by default
+	light.position = centered_pos
+	
+	# Create the trigger area
+	var area = Area2D.new()
+	var rect = RectangleShape2D.new()
+	rect.size = size_in_pixels
+	var shape = CollisionShape2D.new()
+	shape.shape = rect
+	area.add_child(shape)
+	area.position = centered_pos
+	
+	# Connect signals
+	# We "bind" the 'light' variable to the signal
+	area.body_entered.connect(_on_area_entered.bind(light))
+	area.body_exited.connect(_on_area_exited.bind(light))
+	
+	# Add to the scene tree (as children of this Container node)
+	add_child(area)
+	add_child(light)
+
+# --- END NEW FUNCTIONS ---
+
 
 ## This is the "path carving" function
-## X, Y are the TOP-LEFT TILE of a 15x15 path segment
 func create_path(X, Y, came_from_dir, current_length = 0):
-	# Base Case 1: Is this 15x15 spot valid?
 	if not can_place_path(X, Y):
 		return
 
@@ -67,34 +100,34 @@ func create_path(X, Y, came_from_dir, current_length = 0):
 		if current_length > MAX_PATH_LENGTH:
 			try_place_room = true
 	else:
-		# Base Case 2: We are out of rooms
 		mark_path_grid(X, Y)
 		var dead_end_index = path_indexes[0][came_from_dir]
 		place_tile(X, Y, dead_end_index)
+		# Add visibility for the dead end
+		add_visibility_area(X, Y, Vector2(PATH_PIXELS, PATH_PIXELS))
 		return
 		
-
-	# Base Case 3: Try to place a room
 	if try_place_room:
 		var room_pos = get_room_pos_from_path(X, Y, came_from_dir)
 		var room_X = room_pos[0]
 		var room_Y = room_pos[1]
 		
 		if create_room(room_X, room_Y, came_from_dir):
-			# --- SUCCESS ---
 			mark_path_grid(X, Y)
 			var dead_end_index = path_indexes[0][came_from_dir]
 			place_tile(X, Y, dead_end_index)
+			# Add visibility for the connecting dead end
+			add_visibility_area(X, Y, Vector2(PATH_PIXELS, PATH_PIXELS))
 			return 
 		else:
-			# --- FAILURE (blocked) ---
 			mark_path_grid(X, Y)
 			var dead_end_index = path_indexes[0][came_from_dir]
 			place_tile(X, Y, dead_end_index)
+			# Add visibility for the failed dead end
+			add_visibility_area(X, Y, Vector2(PATH_PIXELS, PATH_PIXELS))
 			return 
 			
-	# --- Recursive Step: Carve a path ---
-	mark_path_grid(X, Y) # Mark 15x15 area
+	mark_path_grid(X, Y)
 	
 	var path_type_roll = randi_range(1, 10)
 	var rand_path_type
@@ -104,6 +137,9 @@ func create_path(X, Y, came_from_dir, current_length = 0):
 		
 	var path_pattern_index = path_indexes[rand_path_type][came_from_dir]
 	place_tile(X, Y, path_pattern_index)
+	
+	# Add visibility for the path
+	add_visibility_area(X, Y, Vector2(PATH_PIXELS, PATH_PIXELS))
 
 	var exits = get_path_exits(X, Y, rand_path_type, came_from_dir)
 	for exit in exits:
@@ -111,13 +147,11 @@ func create_path(X, Y, came_from_dir, current_length = 0):
 
 
 ## This is the "room placing" function
-## X, Y are the TOP-LEFT TILE of a 45x45 room
 func create_room(X, Y, came_from_dir) -> bool:
 	if not can_place_room(X, Y):
 		return false 
 
 	rooms -= 1
-	# Mark 45x45 area as occupied
 	for y in range(ROOM_TILES):
 		for x in range(ROOM_TILES):
 			grid[Y+y][X+x] = 1
@@ -130,6 +164,9 @@ func create_room(X, Y, came_from_dir) -> bool:
 		tilemap.set_pattern(Vector2i(X, Y), normalRoom)
 	else:
 		push_error("Room pattern not found: " + str(roomIndex))
+
+	# Add visibility for the room
+	add_visibility_area(X, Y, Vector2(ROOM_PIXELS, ROOM_PIXELS))
 
 	if rooms <= 0:
 		return true 
@@ -155,7 +192,6 @@ func create_room(X, Y, came_from_dir) -> bool:
 # ======================== HELPER FUNCTIONS =========================
 # ===================================================================
 
-## Places a single tile pattern (which is 15x15 or 45x45)
 func place_tile(X, Y, pattern_index):
 	var pattern = tileSet.get_pattern(pattern_index)
 	if pattern:
@@ -163,16 +199,13 @@ func place_tile(X, Y, pattern_index):
 	else:
 		push_error("Path pattern not found: " + str(pattern_index))
 
-## Marks a 15x15 path area as occupied
 func mark_path_grid(X, Y):
 	for y in range(PATH_TILES):
 		for x in range(PATH_TILES):
 			if X+x >= 0 and X+x < grid_size and Y+y >= 0 and Y+y < grid_size:
 				grid[Y+y][X+x] = 1
 
-## Checks if a 15x15 path tile can be placed
 func can_place_path(X, Y) -> bool:
-	# Check 15x15 area
 	for y in range(PATH_TILES):
 		for x in range(PATH_TILES):
 			var check_X = X + x
@@ -183,11 +216,9 @@ func can_place_path(X, Y) -> bool:
 				return false
 	return true
 
-## Checks if a 45x45 room can be placed
 func can_place_room(X, Y) -> bool:
 	if rooms <= 0:
 		return false
-	# Check 45x45 area
 	for y in range(ROOM_TILES):
 		for x in range(ROOM_TILES):
 			var check_X = X + x
@@ -198,42 +229,25 @@ func can_place_room(X, Y) -> bool:
 				return false
 	return true
 
-## Given a 45x45 room's top-left (X,Y) and an exit dir, finds the
-## top-left 15x15 path tile coordinates just outside its door.
 func get_path_pos_from_room(X, Y, exit_dir) -> Array:
-	# Door offset is centered in the path, not the room
 	var door_offset = int((ROOM_TILES - PATH_TILES) / 2.0) # (45 - 15) / 2 = 15
 	
-	if exit_dir == 0: # Exit NORTH
-		return [X + door_offset, Y - PATH_TILES, 1] # Path top-left is at Y-15
-	elif exit_dir == 1: # Exit SOUTH
-		return [X + door_offset, Y + ROOM_TILES, 0] # Path top-left is at Y+45
-	elif exit_dir == 2: # Exit EAST
-		return [X + ROOM_TILES, Y + door_offset, 3] # Path top-left is at X+45
-	else: # Exit WEST (3)
-		return [X - PATH_TILES, Y + door_offset, 2] # Path top-left is at X-15
+	if exit_dir == 0: return [X + door_offset, Y - PATH_TILES, 1] 
+	elif exit_dir == 1: return [X + door_offset, Y + ROOM_TILES, 0] 
+	elif exit_dir == 2: return [X + ROOM_TILES, Y + door_offset, 3] 
+	else: return [X - PATH_TILES, Y + door_offset, 2] 
 
-## Given a 15x15 path's top-left (X,Y) and the dir it came from,
-## finds the top-left 45x45 room coordinates that would connect to it.
 func get_room_pos_from_path(X, Y, came_from_dir) -> Array:
 	var door_offset = int((ROOM_TILES - PATH_TILES) / 2.0) # 15
 	
-	if came_from_dir == 0: # Path came from NORTH (at Y-15)
-		return [X - door_offset, Y + PATH_TILES] # Room top-left at (X-15, Y+15)
-	elif came_from_dir == 1: # Path came from SOUTH (at Y+45)
-		return [X - door_offset, Y - ROOM_TILES] # Room top-left at (X-15, Y-45)
-	elif came_from_dir == 2: # Path came from EAST (at X+45)
-		return [X - ROOM_TILES, Y - door_offset] # Room top-left at (X-45, Y-15)
-	else: # Path came from WEST (3) (at X-15)
-		return [X + PATH_TILES, Y - door_offset] # Room top-left at (X+15, Y-15)
+	if came_from_dir == 0: return [X - door_offset, Y + PATH_TILES] 
+	elif came_from_dir == 1: return [X - door_offset, Y - ROOM_TILES] 
+	elif came_from_dir == 2: return [X - ROOM_TILES, Y - door_offset] 
+	else: return [X + PATH_TILES, Y - door_offset] 
 
-## Given a 15x15 path's top-left (X,Y) and its type/dir,
-## returns an array of its new exits (top-left coords)
 func get_path_exits(X, Y, path_type, came_from_dir) -> Array:
 	var exits = []
 	
-	# [next_X, next_Y, next_came_from_dir]
-	# Each step is PATH_TILES (15) wide
 	var north_exit = [X, Y - PATH_TILES, 1]
 	var south_exit = [X, Y + PATH_TILES, 0]
 	var east_exit =  [X + PATH_TILES, Y, 3]
@@ -241,14 +255,11 @@ func get_path_exits(X, Y, path_type, came_from_dir) -> Array:
 	
 	var all_dirs = [north_exit, south_exit, east_exit, west_exit]
 	
-	# 1: Straight
 	if path_type == 1:
 		if came_from_dir == 0: exits.append(south_exit)
 		if came_from_dir == 1: exits.append(north_exit)
 		if came_from_dir == 2: exits.append(west_exit)
 		if came_from_dir == 3: exits.append(east_exit)
-	
-	# 3: T-Shape
 	elif path_type == 3:
 		if came_from_dir == 0:
 			exits.append(east_exit)
@@ -262,8 +273,6 @@ func get_path_exits(X, Y, path_type, came_from_dir) -> Array:
 		if came_from_dir == 3:
 			exits.append(north_exit)
 			exits.append(south_exit)
-			
-	# 4: 4-Way
 	elif path_type == 4:
 		for i in range(4):
 			if i != came_from_dir: 
