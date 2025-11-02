@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://b7jesms7qjv3x"]
+[gd_scene load_steps=5 format=3 uid="uid://c3np6vv6xkeyi"]
 
 [ext_resource type="Script" uid="uid://dy32bgpr527dc" path="res://main.gd" id="1_1hqqg"]
 [ext_resource type="PackedScene" uid="uid://bjqo08abtb7ms" path="res://container.tscn" id="3_s4rml"]
@@ -40,3 +40,4 @@ offset_top = -92.0
 offset_right = 98.0
 offset_bottom = 177.0
 texture = ExtResource("6_wxh85")
+expand_mode = 5
