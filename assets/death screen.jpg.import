@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b127ihjhievmb"
-path="res://.godot/imported/Run.png-48e697e913b55e7e0cfa67ddff68a99c.ctex"
+uid="uid://sstsmp4w2uex"
+path="res://.godot/imported/death screen.jpg-1980ac6de034da394c3cda80f63709e5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Cobra Chicken Goose/Run.png"
-dest_files=["res://.godot/imported/Run.png-48e697e913b55e7e0cfa67ddff68a99c.ctex"]
+source_file="res://assets/death screen.jpg"
+dest_files=["res://.godot/imported/death screen.jpg-1980ac6de034da394c3cda80f63709e5.ctex"]
 
 [params]
 

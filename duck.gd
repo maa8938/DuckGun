@@ -3,7 +3,7 @@ extends CharacterBody2D
 var health = 3
 var cd = 0.5
 var cooling_time = 0
-const SPEED = 35000
+const SPEED = 400
 var ouch_time = 0
 var pellet_param = []
 var i_frames = 0
@@ -30,8 +30,8 @@ func _process(delta: float) -> void:
 	
 	var current_theta = atan(y/x)
 
-	velocity.x = cos(current_theta) * SPEED * delta * -true_x / x
-	velocity.y = sin(current_theta) * SPEED * delta * -true_y / y
+	velocity.x = cos(current_theta) * SPEED * -true_x / x
+	velocity.y = sin(current_theta) * SPEED * -true_y / y
 	
 	if cooling_time > 0:
 		cooling_time -= delta

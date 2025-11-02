@@ -14,3 +14,4 @@ func _process(delta: float) -> void:
 func _on_duck_died() -> void:
 	get_node("Gameplay").visible = false
 	get_node("Loss Screen").visible = true
+	print("IM DEAD")

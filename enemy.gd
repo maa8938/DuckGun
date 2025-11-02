@@ -6,7 +6,9 @@ var SPEED # the enemy's speed
 var damage # the number of hearts that are removed
 var radius # kill zone for the dude
 var last_time = 0
+var cd 
 var health 
+var wait = false
 const unchanged = null
 var spr
 var ouch_time = 0
@@ -26,6 +28,7 @@ func _process(delta: float) -> void:
 		ouch_time -= delta
 	else:
 		spr.modulate = Color(1,1,1,1)
+	print(health, self)
 	
 	
 func attack_duck():
@@ -43,8 +46,8 @@ func movement(delta):
 	var current_theta = atan(y/x)
 	var deadzone = 10
 
-	var vx = cos(current_theta) * SPEED * delta * -true_x / x
-	var vy = sin(current_theta) * SPEED * delta * -true_y / y
+	var vx = cos(current_theta) * SPEED * -true_x / x
+	var vy = sin(current_theta) * SPEED * -true_y / y
 	
 	if spr != unchanged:
 		sprite_change(spr, left, above, true_y, x)
@@ -78,6 +81,7 @@ func on_attention():
 	pass
 	
 func hurt():
+	print("FROG OWWIE")
 	if health > 1:
 		health -= 1
 		spr.modulate = Color.RED
